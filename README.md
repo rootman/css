@@ -54,6 +54,10 @@ Components are the building-blocks of the page. Components may be nested.
 ```css
 html .button {}
 ```
+As components must have at least the same specificity as scoped elements, we need to add another selector. That might sound cumberstone at first, is important to have components work inside of a block with scoped elements.
+
+Take the .button component as an example. If we want to use it in the .content scope, all .button styles would be overridden by .content. That is not the idea, it should be the other way around. To counter that, we add the html selector to the component and as the component is defined after the scoped elements, it will override the styles.
+
 Specificity : 1 + 10 = 11
 
 ### Trumps
