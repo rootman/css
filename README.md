@@ -36,41 +36,45 @@ Specificity: 0, 1
 
 ### Elements
 ```css
-a {}
-p {}
+a {} # 0 - 0 - 1
+p {} # 0 - 0 - 1
 ```
-Specificity: 1
 
 ### Scoped elements
 
+Styling elements in a scope is very useful for user generated content. The CMS/users must be able to use plain elements without
+classes and still get styled results.
+
 ```css
-.content a {}
-.content ul {}
+.content a {} # 0 - 1 - 1
+.content ul {} # 0 - 1 - 1
+
+.blog__text p {} # 0 - 1 - 1
 ```
-Specificity : 10 + 1 = 11
+
+The problem with scoped elements is, that when using a component inside of a scope, the styles of the component will be overridden
+by the scoped elements style.
+
+The best solution is to not allow components inside user generated content. That might work in most cases, but can be a problem
+for components like a button.
 
 ### Components
 Components are the building-blocks of the page. Components may be nested.
 ```css
-html .button {}
+.button {} # 0 - 1 - 0
 ```
-As components must have at least the same specificity as scoped elements, we need to add another selector. That might sound cumberstone at first, is important to have components work inside of a block with scoped elements.
-
-Take the .button component as an example. If we want to use it in the .content scope, all .button styles would be overridden by .content. That is not the idea, it should be the other way around. To counter that, we add the html selector to the component and as the component is defined after the scoped elements, it will override the styles.
-
-Specificity : 0 - 1 - 1
 
 Common cases when using modifiers
 ```css
 .button--big {} # 0 - 1 - 0
 .button--big .button__text {} # 0 - 2 - 0
-.button--beg .button__text a {} # 0 - 2 - 1
+.button--big .button__text a {} # 0 - 2 - 1, modified scoped elements
 ```
 
 ### Trumps
 ```css
 .hidden {
-	display: none!important;
+    display: none!important;
 }
 ```
 Specificity: 11+, !important
