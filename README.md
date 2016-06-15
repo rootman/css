@@ -58,7 +58,14 @@ As components must have at least the same specificity as scoped elements, we nee
 
 Take the .button component as an example. If we want to use it in the .content scope, all .button styles would be overridden by .content. That is not the idea, it should be the other way around. To counter that, we add the html selector to the component and as the component is defined after the scoped elements, it will override the styles.
 
-Specificity : 1 + 10 = 11
+Specificity : 0 - 1 - 1
+
+Common cases when using modifiers
+```css
+.button--big {} # 0 - 1 - 0
+.button--big .button__text {} # 0 - 2 - 0
+.button--beg .button__text a {} # 0 - 2 - 1
+```
 
 ### Trumps
 ```css
