@@ -55,14 +55,26 @@ classes and still get styled results.
 The problem with scoped elements is, that when using a component inside of a scope, the styles of the component will be overridden
 by the scoped elements style.
 
-The best solution is to not allow components inside user generated content. That might work in most cases, but can be a problem
-for components like a button. Another solution is to increase the specificity of the component by adding the scope class to the component.
+The cleanest solution is to not allow components inside user generated content. That might work in most cases, but can be a problem
+for components like a button.
+
+Another solution is to exclude elements with classes in the scoped elements definition. See working example here: http://codepen.io/rootman/pen/mRwQGO
 
 ```css
-.button, .content .button {} # 0 - 1 - 0, 0 - 2 - 0 > 0 - 1 - 1
+.scoped {
+  a:not([class]) {
+    color: blue;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    &:not([class]) {
+      color: blue;
+    }
+  }
+}
 ```
 
-It is possible to have helper classes, like .content, that can be applied to containers containing scoped elements. Alternatively one could define the scoped elements in the component where it is used. Or using a mixin/extend. Keep it simple, don't overthink. When in doubt, just create a helper class and add it to the container in question. That way, it can easily be reused without generating additional css.
+This could be done as a convention for all scoped elements, or just for the elements that would override components.
 
 
 ### Components
